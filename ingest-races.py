@@ -1,6 +1,6 @@
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DateType
 
-## read csv
+# schema
 races_schema = StructType(fields=[
     StructField("raceId", IntegerType(), False),
     StructField("year", IntegerType(), True),
@@ -12,6 +12,7 @@ races_schema = StructType(fields=[
     StructField("url", StringType(), True)
 ])
 
+## read csv
 races = spark.read \
     .schema(races_schema) \
     .option("header", True) \
@@ -29,7 +30,7 @@ races_selected = races.select(
                             col("time")
                             )
 
-## transform some columns
+## transform columns
 races_transformed = races_selected.withColumnRenamed("raceId", "race_id") \
     .withColumnRenamed("year", "race_year") \
     .withColumnRenamed("circuitId", "circuit_id") \
