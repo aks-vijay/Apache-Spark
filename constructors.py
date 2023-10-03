@@ -1,4 +1,4 @@
-# schema - 
+# schema - DDL format
 constructor_schema = "constructorId INT, constructorRef string, name string, nationality string, url string"
 
 constructor = spark.read \
