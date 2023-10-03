@@ -36,4 +36,5 @@ drivers_final = drivers_df.withColumnRenamed("driverId", "driver_id") \
     .withColumn("name", concat(drivers_df.name.forename, lit(" "), drivers_df.name.surname)) \
     .drop("url")
 
+# load
 drivers_final.write.mode(write_mode).parquet(output_location)
