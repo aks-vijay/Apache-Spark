@@ -1,5 +1,6 @@
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DateType
 
+## read csv
 races_schema = StructType(fields=[
     StructField("raceId", IntegerType(), False),
     StructField("year", IntegerType(), True),
@@ -24,7 +25,7 @@ races_selected = races.select(col("raceId"), col("year"), col("round"), col("cir
 races_transformed = races_selected.withColumnRenamed("raceId", "race_id") \
     .withColumnRenamed("year", "race_year") \
     .withColumnRenamed("circuitId", "circuit_id") \
-    .withColumn("race_timestamp", to_timestamp(concat(col("date"), lit(" "), col("time")))) \
+    .withColumn("race_timestamp", to_timestamp(concat(col("date"), lit(" "), col("time")), 'yyyy-MM-dd HH:mm:ss')) \
     .withColumn("ingestion_date", current_timestamp())
 
 ## select required columns
@@ -37,5 +38,6 @@ races_transformed_final = races_transformed.select(
                                                     col("race_timestamp"),
                                                     col("ingestion_date")
                                                     )
+
 ## write to parquet
 races_transformed_final.write.mode("overwrite").parquet('/dbfs/FileStore/parquet_output/processed/races')
