@@ -1,4 +1,6 @@
 input_file = '/FileStore/tables/drivers.json'
+write_mode = "overwrite"
+output_location = '/dbfs/FileStore/parquet_output/processed/drivers'
 
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DateType
 
@@ -30,8 +32,5 @@ drivers_final = drivers_df.withColumnRenamed("driverId", "driver_id") \
     .withColumn("ingestion_date", current_timestamp()) \
     .withColumn("name", concat(drivers_df.name.forename, lit(" "), drivers_df.name.surname)) \
     .drop("url")
-
-write_mode = "overwrite"
-output_location = '/dbfs/FileStore/parquet_output/processed/drivers'
 
 drivers_final.write.mode(write_mode).parquet(output_location)
