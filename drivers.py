@@ -1,9 +1,11 @@
+# set local variables
 input_file = '/FileStore/tables/drivers.json'
 write_mode = "overwrite"
 output_location = '/dbfs/FileStore/parquet_output/processed/drivers'
 
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DateType
 
+# schema
 names_schema = StructType(fields=[
     StructField("forename", StringType(), nullable=True),
     StructField("surname", StringType(), nullable=True)
@@ -20,6 +22,7 @@ drivers_schema = StructType(fields=[
     StructField("url", StringType(), nullable=True)
 ])
 
+# read data
 drivers_df = spark.read \
                 .schema(drivers_schema) \
                 .json(input_file)
