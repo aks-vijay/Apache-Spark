@@ -19,7 +19,15 @@ races = spark.read \
 
 ## Select only required columns
 from pyspark.sql.functions import col, lit, current_timestamp, to_timestamp, concat
-races_selected = races.select(col("raceId"), col("year"), col("round"), col("circuitId"), col("name"), col("date"), col("time"))
+races_selected = races.select(
+                            col("raceId"), 
+                            col("year"), 
+                            col("round"), 
+                            col("circuitId"), 
+                            col("name"), 
+                            col("date"), 
+                            col("time")
+                            )
 
 ## transform some columns
 races_transformed = races_selected.withColumnRenamed("raceId", "race_id") \
