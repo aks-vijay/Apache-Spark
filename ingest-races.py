@@ -40,4 +40,4 @@ races_transformed_final = races_transformed.select(
                                                     )
 
 ## write to parquet
-races_transformed_final.write.mode("overwrite").parquet('/dbfs/FileStore/parquet_output/processed/races')
+races_transformed_final.write.partitionBy("race_year").mode("overwrite").parquet('/dbfs/FileStore/parquet_output/processed/races')
