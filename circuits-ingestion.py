@@ -1,6 +1,11 @@
 
+# to fetch the variables from other notebook
 %run "../configuration/configuration"
 %run "../configuration/common_functions"
+
+# widget to add to the notebook -> Which can be used later anywhere
+dbutils.widgets.text("p_data_source", "")
+v_data_source = dbutils.widgets.get("p_data_source")
 
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DoubleType
 
@@ -22,11 +27,14 @@ circuits_df = spark.read \
     .schema(circuits_schema) \
     .csv(f'{raw_folder_path}/circuits-2.csv')
 
+from pyspark.sql.functions import lit
+
 circuits_df_renamed = circuits_df_selected.withColumnRenamed("circuitID", "circuit_id") \
     .withColumnRenamed("circuitRef", "circuit_ref") \
     .withColumnRenamed("lat", "latitude") \
     .withColumnRenamed("lng", "longitude") \
-    .withColumnRenamed("alt", "altitude")
+    .withColumnRenamed("alt", "altitude") \
+    .withColumn("data_source", lit(v_data_source)) ## from widget
 
 # function defined in external file - Extracted using %run "../configuration/common_functions"
 circuits_final_df = add_ingestion_date(circuits_df_renamed)
