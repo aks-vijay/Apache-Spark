@@ -23,3 +23,23 @@ demo_grouped_df.withColumn("Rank", rank().over(driverRankSpecification)).show(10
 ## requirement is no matter what year - give me the rank based on the points
 driverRankSpecWithoutYear = Window.orderBy(desc("sum_of_points"))
 demo_grouped_df.withColumn("Rank", rank().over(driverRankSpecWithoutYear)).show(100)
+
+##############################################
+Explanation:
+# Window Specification (driverRankSpecification):
+
+# Window.partitionBy("race_year"): This part defines the window partitions. The data is divided into partitions based on the values in the "race_year" column. This means that window functions will be applied separately to each partition.
+# .orderBy(desc("sum_of_points")): This part specifies the ordering within each partition. The data within each partition is sorted in descending order based on the "sum_of_points" column.
+# Window Function (rank()):
+
+# The rank() function is a window function that assigns a rank to each row within a partition based on the order specified in the window specification.
+# In this case, it will assign a rank to each row within each "race_year" partition based on the descending order of "sum_of_points."
+# Adding a New Column (withColumn):
+
+# demo_grouped_df.withColumn("Rank", rank().over(driverRankSpecification)): This line adds a new column named "Rank" to the DataFrame demo_grouped_df. The values in this column will be the ranks assigned by the rank() function based on the window specification.
+# Showing the Result (show(100)):
+
+# This displays the first 100 rows of the resulting DataFrame with the newly added "Rank" column.
+# Note:
+# The rank() function is used here, which means if there are ties (rows with the same "sum_of_points"), those rows will receive the same rank, and the next rank will be skipped.
+# If you want to handle ties differently, you might consider using dense_rank() instead of rank(). dense_rank() will not skip ranks for tied values.
