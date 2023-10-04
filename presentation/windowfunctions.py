@@ -24,6 +24,10 @@ demo_grouped_df.withColumn("Rank", rank().over(driverRankSpecification)).show(10
 driverRankSpecWithoutYear = Window.orderBy(desc("sum_of_points"))
 demo_grouped_df.withColumn("Rank", rank().over(driverRankSpecWithoutYear)).show(100)
 
+## to check duplicates
+driverRowNumberSpec = Window.partitionBy("race_year", "driver_name").orderBy(desc("driver_name"))
+demo_grouped_df.withColumn("Duplicates", row_number().over(driverRowNumberSpec)).where("Duplicates == 2").show()
+
 ##############################################
 Explanation:
 # Window Specification (driverRankSpecification):
