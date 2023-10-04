@@ -45,3 +45,10 @@ df_joined = df_circuits.join(df_races, df_circuits.circuit_id == df_races.circui
             df_races.round
             )
 
+# semi join - same as inner join but only returns left dataframe
+df_joined = df_circuits.join(df_races, df_circuits.circuit_id == df_races.circuit_id, "semi") \
+    .select(
+            df_circuits.name.alias("circuit_name"), 
+            df_circuits.location, 
+            df_circuits.country
+            )
