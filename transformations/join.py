@@ -24,3 +24,14 @@ df_joined = df_circuits.join(df_races, df_circuits.circuit_id == df_races.circui
             df_races.name.alias("race_name"), 
             df_races.round
             )
+
+# right join both the dataframes
+df_joined = df_circuits.join(df_races, df_circuits.circuit_id == df_races.circuit_id, "right") \
+    .select(
+            df_circuits.name.alias("circuit_name"), 
+            df_circuits.location, 
+            df_circuits.country, 
+            df_races.name.alias("race_name"), 
+            df_races.round
+            )
+
