@@ -55,3 +55,6 @@ df_joined = df_circuits.join(df_races, df_circuits.circuit_id == df_races.circui
 
 # anti join - similar to semi join but returns unmatched records of all the left dataframe which are not matching with right dataframe
 df_joined = df_circuits.join(df_races, df_circuits.circuit_id == df_races.circuit_id, "anti") 
+
+# cross join
+df_circuits.crossJoin(df_races)
