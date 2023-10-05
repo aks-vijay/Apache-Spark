@@ -40,4 +40,3 @@ SELECT * FROM global_temp.gvw_race_results
 spark.sql("""
           SELECT * FROM global_temp.gvw_race_results
           """)
-DataFrame[race_year: int, race_name: string, race_date: timestamp, circuit_location: string, driver_name: string, driver_number: int, driver_nationality: string, team: string, grid: int, fastest_lap: int, race time: string, points: float, position: int, created_date: timestamp]
