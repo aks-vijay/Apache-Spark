@@ -1,3 +1,10 @@
+-- #################################################################################
+-- SPARK QUERIES -> HIVE METASTORE (METADATA INFO)
+-- HIVE METASTORE (METADATA INFO) -> QUERIES DATA FROM EXTERNAL DBFS / ADLS LOCATION
+-- 
+-- If table is dropped in HIVE, it doesn't delete in external DBFS/ADLS
+-- #################################################################################
+
 %run "../configuration/configuration"
 
 %python
