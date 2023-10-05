@@ -19,4 +19,9 @@ from pyspark.sql.functions import rank, desc
 driver_rank_spec = Window.partitionBy("race_year").orderBy(desc("total_points"), desc("wins"))
 final_df = driver_standings_df.withColumn("rank", rank().over(driver_rank_spec))
 
-final_df.write.mode("overwrite").parquet(f"{presentation_folder_path}/driver_standings")
+# f1_presentation - creating as managed DB
+CREATE DATABASE IF NOT EXISTS f1_presentation
+LOCATION "dbfs:/FileStore/presentation"
+
+# write the parquet file and save it under f1_presentationdb
+final_df.write.mode("overwrite").format("parquet").saveAsTable("f1_presentation.driver_standings")
