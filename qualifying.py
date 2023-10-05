@@ -25,5 +25,6 @@ qualifying_df = spark.read \
     .withColumnRenamed("constructorId", "constructor_id") \
     .withColumn("ingestion_date", current_timestamp())
 
-# load to parquet
-qualifying_df.write.mode("overwrite").parquet("/dbfs/FileStore/parquet_output/processed/qualifying")
+# load to parquet and save as table
+# f1 processed is a managed DB
+qualifying_df.write.mode("overwrite").format("parquet").saveAsTable("f1_processed.qualifying")
