@@ -8,7 +8,7 @@ data = [
     (4, "akshay", 28, True, datetime.datetime(1995, 5, 6))
     ]
 
-# convert list of tuples -> list of rows
+# convert list of tuples -> list of rows (Reason: Dataframe is collection of Rows)
 from pyspark.sql import Row
 users_row_data = [Row(*user) for user in data]
 
