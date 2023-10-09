@@ -21,7 +21,7 @@ df.coalesce(1) \
     .write.mode("overwrite") \
     .csv(
         f"dbfs:/FileStore/{user}/courses/",
-        compression="gzip"
+        compression="gzip" #uncompression happens automatically
         )
 # reparition
 df.repartition(1) \
@@ -32,7 +32,7 @@ df.repartition(1) \
     .write.mode("overwrite") \
     .csv(
         f"dbfs:/FileStore/{user}/courses/",
-        compression="gzip"
+        compression="snappy" #uncompression happens automatically
         )
 
 print(df.rdd.getNumPartitions())
