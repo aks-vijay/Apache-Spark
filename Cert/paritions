@@ -1,0 +1,2 @@
+When partitioning is done using multiple columns, it is indeed composite sorting.
+Composite Partitioning is when different partitioning strategies are used one after the other.
