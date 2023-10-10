@@ -1,0 +1,40 @@
+Execution Modes:
+- Standalone
+- YARN
+- MESOS
+- Local
+- Kubernetes
+
+Spark UI
+Executor page shows driver and worker details. How much each core it's using.
+Environment - Consolidated view of relevant properties
+
+Executors (Workers) and Slots:
+
+Executors:
+- If you configure the workers as 3 in the cluster configuration, there will be 3 executors
+- Each executor will have 4 cores to process data (Depending on the configuration)
+
+Slot:
+- Core is called as SLOT. When data is not being processed, it's called as SLOT. 
+- If 4 is the core and 3 executors, then total capicity with respect to total slots would be 12 (3 executors x 4 cores)
+- Driver decides which task should be done and allocates it to empty slots. If a slot is busy, then driver will allocate to other empty slots.
+- Data is converted to Task as soon as the data is being processed by the slot
+- If a driver submits task that requires 80 tasks, at a time only 12 tasks will be processed. 1 task per core. Once task is completed, slots will be available to take additional tasks.
+
+Adaptive Execution:
+- If a shuffle operation happens, the job will use entire paritions to process a small data file if adaptive execution is disabled.
+- If enabled, it will use lesser number of paritions for a shuffle
+
+# adaptive execution
+spark.conf.get("spark.sql.adaptive.enabled")
+
+# get parition
+spark.conf.get("spark.sql.shuffle.partitions")
+
+High level categories of adaptive execution:
+- Coalescing post shuffle partitions (property: spark.sql.adaptive.coalesce.paritions.enabled)
+- Converting sort merge join to broadcast join (property: spark.sql.adaptive.autoBroadcastJoinThreshold)
+- Converting sort merge join to shuffled hash join (property: spark.sql.adaptive.maxShuffledHashjoinLocalMapThreshold)
+- Optimizing Skew join (property: spark.sql.adaptive.skewJoin.enabled)
+
