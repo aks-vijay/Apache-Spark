@@ -1,9 +1,10 @@
 Execution Modes:
-- Standalone
-- YARN
-- MESOS
 - Local
-- Kubernetes
+- Client
+- Cluster - Allocates resources in cluster manager on cluster mode
+
+Who schedules task on a cluster in Client mode?
+- Spark driver schedules tasks on the cluster. 
 
 Spark UI
 Executor page shows driver and worker details. How much each core it's using.
@@ -22,9 +23,13 @@ Slot:
 - Data is converted to Task as soon as the data is being processed by the slot
 - If a driver submits task that requires 80 tasks, at a time only 12 tasks will be processed. 1 task per core. Once task is completed, slots will be available to take additional tasks.
 
+Task:
+- Deepest level of Spark Execution
+
 Adaptive Execution:
 - If a shuffle operation happens, the job will use entire paritions to process a small data file if adaptive execution is disabled.
 - If enabled, it will use lesser number of paritions for a shuffle
+- It also optimizes partiion pruning
 
 # adaptive execution
 spark.conf.get("spark.sql.adaptive.enabled")
@@ -37,4 +42,7 @@ High level categories of adaptive execution:
 - Converting sort merge join to broadcast join (property: spark.sql.adaptive.autoBroadcastJoinThreshold)
 - Converting sort merge join to shuffled hash join (property: spark.sql.adaptive.maxShuffledHashjoinLocalMapThreshold)
 - Optimizing Skew join (property: spark.sql.adaptive.skewJoin.enabled)
+
+Dataset API
+- Dataset API is not available in Python. Only available in Scala.
 
