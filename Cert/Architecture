@@ -1,10 +1,12 @@
 Execution Modes:
-- Local
-- Client
-- Cluster - Allocates resources in cluster manager on cluster mode
+- Local - Runs the driver and cluster manager in the same local
+- Client - Runs the driver on client machine.
+- Cluster - Runs the driver on worker nodes.
 
 Who schedules task on a cluster in Client mode?
 - Spark driver schedules tasks on the cluster. 
+
+Cluster manager is typically on a seperate node. Not on the same host as the driver.
 
 Spark UI
 Executor page shows driver and worker details. How much each core it's using.
@@ -46,3 +48,8 @@ High level categories of adaptive execution:
 Dataset API
 - Dataset API is not available in Python. Only available in Scala.
 
+Caching
+- Saves the dataframe in the memory. If we have to refer to the dataframe again, it does a lookup to the cached dataframe instead of reading the whole dataframe
+- df.cache()
+
+Persist
