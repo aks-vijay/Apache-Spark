@@ -52,4 +52,45 @@ Caching
 - Saves the dataframe in the memory. If we have to refer to the dataframe again, it does a lookup to the cached dataframe instead of reading the whole dataframe
 - df.cache()
 
+To learn more:
 Persist
+Broadcast join
+RDD
+load
+asc, desc - sort/orderby
+size
+dropduplicates
+Random rows  
+drop columns - multiple
+Option - nullvalue, emptyvalue
+
+dataframe has no broadcast method
+Wrong – Jobs, Stages, Storage, Executors, and SQL are all tabs in the Spark UI. DAGs can be inspected in the "Jobs" tab in the job details or in the Stages or SQL tab, but are not a separate tab.
+
+All of these features, except for dynamically injecting scan filters, are part of Adaptive Query Execution. Dynamically injecting scan filters for join operations to limit the amount of data to be considered in a query is part of Dynamic Partition Pruning and not of Adaptive Query Execution
+Explode - Can be called only from select. Not a method to be accessed by DF
+Collect - Does not take any arguments. 
+Head - Can be used if the column type is correct
+Pow - Works in Spark
+Array_contains - Works in filter even with strings
+Boolean types - only | and & are valid
+df.drop ("", "") - Even if the column is unavailable, Spark ignores, If list is used, we need to use varying arguments
+df.printSchema - Wrong. Should be called with brackets as its a method
+UDF registration - (Name of the UDF, {Function}, ReturnType)
+
+The code block displayed below contains an error. When the code block below has executed, it should have divided DataFrame transactionsDf into 14 parts, based on columns storeId and transactionDate (in this order). Find the error.
+
+Code block:
+
+transactionsDf.coalesce(14, ("storeId", "transactionDate"))
+
+Explanation
+Correct code block:
+
+transactionsDf.repartition(14, "storeId", "transactionDate").count()
+
+Since we do not know how many partitions DataFrame transactionsDf has, we cannot safely use coalesce, since it would not make any change if the current number of partitions is smaller than 14. So, we need to use repartition.
+
+In the Spark documentation, the call structure for repartition is shown like this: DataFrame.repartition(numPartitions, *cols). The * operator means that any argument after numPartitions will be interpreted as column. Therefore, the brackets need to be removed.
+
+Finally, the question specifies that after the execution the DataFrame should be divided. So, indirectly this question is asking us to append an action to the code block. Since .select() is a transformation. the only possible choice here is .count().
