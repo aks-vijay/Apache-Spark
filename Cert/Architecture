@@ -63,6 +63,8 @@ dropduplicates
 Random rows  
 drop columns - multiple
 Option - nullvalue, emptyvalue
+Shared variables
+Memory management and storage levels
 
 dataframe has no broadcast method
 Wrong – Jobs, Stages, Storage, Executors, and SQL are all tabs in the Spark UI. DAGs can be inspected in the "Jobs" tab in the job details or in the Stages or SQL tab, but are not a separate tab.
